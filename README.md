@@ -1,34 +1,18 @@
-## Usage
+# PocketBase + SolidJS example
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+This is an example app using PocketBase for the back-end and SolidJS for the front-end.
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+## SolidJS usage
 
-```bash
-$ npm install # or pnpm install or yarn install
+Please configure the PocketBase URL in `src/services/pb.ts` according to your setup.
+
+Running the front-end in development mode can be done using:
+
+```
+npm i
+npm run dev
 ```
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+## PocketBase config
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm dev` or `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-
-### `npm run build`
-
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-## Deployment
-
-You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+The PocketBase collections definition is provided as the `pb_schema.json` file in this repository
