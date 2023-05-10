@@ -43,6 +43,7 @@ export default function App() {
         </tbody>
       </table>
 
+      <h2>Add new movie</h2>
       <NewMovieForm />
     </div>
   )

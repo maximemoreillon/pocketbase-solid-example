@@ -1,6 +1,7 @@
 import { createStore } from "solid-js/store"
 import { pb } from "../services/pb"
 import { NewMovie } from "../services/domain"
+import styles from "./NewMovieForm.module.css"
 
 export default function NewMovieForm() {
   const collection = "movies"
@@ -10,15 +11,13 @@ export default function NewMovieForm() {
     year: 2000,
   })
 
-  const submit = async (event: Event) => {
+  const submit = (event: Event) => {
     event.preventDefault()
-    await pb.collection(collection).create(newMovie)
+    pb.collection(collection).create(newMovie)
   }
 
   return (
-    <form onSubmit={submit}>
-      <h2>Add new movie</h2>
-      {/* TODO: Set value to match that of JS */}
+    <form onSubmit={submit} class={styles.form}>
       <input
         type="text"
         placeholder="Title"
