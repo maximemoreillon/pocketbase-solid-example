@@ -5,7 +5,6 @@ import { NewMovie } from "../services/domain"
 export default function NewMovieForm() {
   const collection = "movies"
 
-  // TODO:  TS interface
   const [newMovie, setNewMovie] = createStore<NewMovie>({
     title: "",
     year: 2000,
@@ -23,11 +22,13 @@ export default function NewMovieForm() {
       <input
         type="text"
         placeholder="Title"
+        value={newMovie.title}
         onInput={(e) => setNewMovie("title", e.target.value)}
       />
       <input
         type="number"
         placeholder="Year"
+        value={newMovie.year}
         onInput={(e) => setNewMovie("year", Number(e.target.value))}
       />
       <button type="submit">Add new movie</button>
