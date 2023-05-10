@@ -1,15 +1,19 @@
-import { createSignal } from "solid-js"
+import { createStore } from "solid-js/store"
 import { pb } from "../services/pb"
+import { NewMovie } from "../services/domain"
 
 export default function NewMovieForm() {
   const collection = "movies"
 
   // TODO:  TS interface
-  const [newMovie, setNewMovie] = createSignal<any>({ title: "", year: 2000 })
+  const [newMovie, setNewMovie] = createStore<NewMovie>({
+    title: "",
+    year: 2000,
+  })
 
   const submit = async (event: Event) => {
     event.preventDefault()
-    await pb.collection(collection).create(newMovie())
+    await pb.collection(collection).create(newMovie)
   }
 
   return (
@@ -19,14 +23,12 @@ export default function NewMovieForm() {
       <input
         type="text"
         placeholder="Title"
-        onInput={(e) => setNewMovie({ ...newMovie(), title: e.target.value })}
+        onInput={(e) => setNewMovie("title", e.target.value)}
       />
       <input
         type="number"
         placeholder="Year"
-        onInput={(e) =>
-          setNewMovie({ ...newMovie(), year: Number(e.target.value) })
-        }
+        onInput={(e) => setNewMovie("year", Number(e.target.value))}
       />
       <button type="submit">Add new movie</button>
     </form>
