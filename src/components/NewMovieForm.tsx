@@ -1,7 +1,7 @@
 import { createSignal } from "solid-js"
 import { pb } from "../services/pb"
 
-export default function App() {
+export default function NewMovieForm() {
   const collection = "movies"
 
   // TODO:  TS interface
