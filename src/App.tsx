@@ -18,6 +18,10 @@ export default function App() {
       if (action === "create") setMovies([...movies(), record])
       else if (action === "delete")
         setMovies(movies().filter((m) => m.id !== record.id))
+      else if (action === "update") {
+        setMovies(movies().filter((m) => m.id !== record.id))
+        setMovies([...movies(), record])
+      }
     })
   })
 
