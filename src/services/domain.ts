@@ -3,7 +3,3 @@ export interface Movie {
   title: string
   year: number
 }
-export interface NewMovie {
-  title: string
-  year: number
-}

@@ -1,7 +1,11 @@
 import { createStore } from "solid-js/store"
 import { pb } from "../services/pb"
-import { NewMovie } from "../services/domain"
 import styles from "./NewMovieForm.module.css"
+
+interface NewMovie {
+  title: string
+  year: number
+}
 
 export default function NewMovieForm() {
   const collection = "movies"

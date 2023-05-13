@@ -1,54 +1,38 @@
-import { createSignal, For, onMount, onCleanup } from "solid-js"
-import { pb } from "./services/pb"
-import { Movie } from "./services/domain"
+import LoginForm from "./components/LoginForm"
+import LogoutButton from "./components/LogoutButton"
 import NewMovieForm from "./components/NewMovieForm"
-import MovieTableRow from "./components/MovieTableRow"
+import MoviesTable from "./components/MoviesTable"
 import styles from "./App.module.css"
+import { createSignal, onMount, Show } from "solid-js"
+import { pb } from "./services/pb"
 
 export default function App() {
-  const collection = "movies"
+  const [authenticated, setAuthenticated] = createSignal<boolean>(false)
 
-  const [movies, setMovies] = createSignal<Movie[]>([])
-
-  onMount(async () => {
-    const data = await pb.collection(collection).getList<Movie>(1, 50)
-    setMovies(data.items)
-
-    pb.collection(collection).subscribe<Movie>("*", ({ action, record }) => {
-      if (action === "create") setMovies([...movies(), record])
-      else if (action === "delete")
-        setMovies(movies().filter((m) => m.id !== record.id))
-      else if (action === "update") {
-        setMovies(movies().filter((m) => m.id !== record.id))
-        setMovies([...movies(), record])
-      }
-    })
+  onMount(() => {
+    setAuthenticated(pb.authStore.isValid)
   })
 
-  onCleanup(() => {
-    pb.collection(collection).unsubscribe()
+  pb.authStore.onChange((token) => {
+    setAuthenticated(!!token)
   })
 
   return (
     <div class={styles.App}>
       <h1>My favorite movies</h1>
-      <table class={styles.table}>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Year</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <For each={movies()}>
-            {(movie) => <MovieTableRow movie={movie} />}
-          </For>
-        </tbody>
-      </table>
 
-      <h2>Add new movie</h2>
-      <NewMovieForm />
+      <Show when={!authenticated()}>
+        <LoginForm />
+      </Show>
+
+      <Show when={authenticated()}>
+        <MoviesTable />
+        <h2>Add new movie</h2>
+        <NewMovieForm />
+        <p>
+          <LogoutButton />
+        </p>
+      </Show>
     </div>
   )
 }
